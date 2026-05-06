@@ -1,0 +1,35 @@
+# @package _global_
+# Soft Actor-Critic — fallback algorithm, good sample efficiency
+name: SAC
+
+learning_rate: 0.0003
+buffer_size: 1_000_000
+batch_size: 256
+tau: 0.005
+gamma: 0.99
+train_freq: 1
+gradient_steps: 1
+learning_starts: 10_000
+ent_coef: auto
+target_entropy: auto
+
+policy_kwargs:
+  net_arch:
+    - 512
+    - 256
+
+action_noise:
+  sigma: 0.1
+
+total_timesteps: 15_000_000
+eval_freq: 20_000
+n_eval_episodes: 20
+
+exploration:
+  thresholds: [450, 1950, 4250]
+  patience: 20
+  noise_scale: 1.2
+  max_sigma: 1.0
+  min_sigma: 0.1
+
+checkpoint_rewards: [450, 1950, 4250]

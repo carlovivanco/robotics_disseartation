@@ -1,0 +1,37 @@
+# @package _global_
+name: robosuite
+env_id: BoltScrewdrivingDisassembly
+
+# Parallelism
+n_envs: 8
+
+# Task
+horizon: 5000
+control_freq: 20
+reward_shaping: true
+
+# VecNormalize
+norm_obs: true
+norm_reward: true
+clip_obs: 10.0
+vecnorm_path: vec_normalize_SD_OSC.pkl
+
+# Domain randomization — key for sim-to-real transfer
+domain_randomization:
+  enabled: true
+  friction_range: [0.3, 1.5]        # bolt-table Coulomb friction
+  mass_multiplier_range: [0.8, 1.2] # bolt mass perturbation
+  damping_range: [0.5, 2.0]         # joint damping noise
+  obs_noise_std: 0.01               # Gaussian noise added to observations
+  action_delay_prob: 0.05           # probability of repeating last action (latency sim)
+  gravity_range: [9.5, 10.1]        # gravity perturbation (m/s²)
+
+# Improved potential-based reward shaping
+reward:
+  reach_weight: 0.1
+  grasp_weight: 0.35
+  screw_weight: 0.5
+  moveaway_weight: 0.7
+  success_bonus: 1.0
+  # Potential-based shaping discount (must match RL gamma)
+  potential_gamma: 0.9018

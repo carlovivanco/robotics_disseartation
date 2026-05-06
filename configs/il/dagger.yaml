@@ -1,0 +1,46 @@
+# @package _global_
+# DAgger — Dataset Aggregation (Ross et al. 2011)
+# Fixes BC's compounding-error problem by interactively querying the expert
+name: dagger
+
+# DAgger schedule
+n_iterations: 10          # number of DAgger rounds
+rollouts_per_iter: 5      # env rollouts per round
+horizon: 2000             # episode length during data collection
+
+# Expert mixing coefficient β (decays over iterations)
+# β=1 → follow expert fully; β=0 → follow learned policy fully
+beta_schedule: exponential
+beta_start: 1.0
+beta_decay: 0.5           # β_i = beta_start * beta_decay^i
+
+# Oracle (expert) — either a pre-trained BC or DRL model
+oracle:
+  type: bc               # bc | drl
+  path: bc_model_best_SD.pth
+  obs_mean_path: null    # if null, recomputed from demos
+  obs_std_path: null
+
+# BC network to train with DAgger
+network:
+  hidden_dim1: 256
+  hidden_dim2: 1024
+  activation: relu
+  dropout: 0.0
+
+# Training (inner loop per DAgger iteration)
+training:
+  n_epochs: 50
+  batch_size: 128
+  learning_rate: 3.0e-4
+  optimizer: adamw
+  early_stopping_patience: 15
+
+# Dataset
+dataset:
+  hdf5_path: demos/demo_SD_2/demo.hdf5
+  normalize: true
+
+# Output
+model_path: dagger_model_best.pth
+eval_episodes: 5

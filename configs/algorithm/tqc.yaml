@@ -1,0 +1,45 @@
+# @package _global_
+# Truncated Quantile Critics — best off-policy algorithm for contact-rich robotics
+name: TQC
+
+# Optuna-tuned base hyperparameters (inherited from original TD3 search)
+learning_rate: 0.00015546
+buffer_size: 2_000_000
+batch_size: 512
+tau: 0.01417
+gamma: 0.9018
+train_freq: 2
+gradient_steps: 16
+learning_starts: 10_000
+
+# TQC-specific
+n_quantiles: 25
+n_critics: 2
+top_quantiles_to_drop_per_net: 2
+
+policy_kwargs:
+  net_arch:
+    - 512
+    - 256
+  n_quantiles: 25
+  n_critics: 2
+
+# Action noise
+action_noise:
+  sigma: 0.25
+
+# Training schedule
+total_timesteps: 15_000_000
+eval_freq: 20_000
+n_eval_episodes: 20
+
+# Dynamic exploration callback
+exploration:
+  thresholds: [450, 1950, 4250]
+  patience: 20
+  noise_scale: 1.2
+  max_sigma: 1.0
+  min_sigma: 0.1
+
+# Checkpoint reward thresholds (save at these milestones)
+checkpoint_rewards: [450, 1950, 4250]
