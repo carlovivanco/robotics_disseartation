@@ -1,0 +1,13 @@
+train: ../train_/images
+val: ../valid_/images
+test: ../test_/images
+
+nc: 1
+names: ['bolt']
+
+roboflow:
+  workspace: thesis-xvqdl
+  project: nuts-nkyca-0nu7w
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/thesis-xvqdl/nuts-nkyca-0nu7w/dataset/1

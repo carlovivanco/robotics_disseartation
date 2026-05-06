@@ -1,0 +1,38 @@
+<mujoco model="m5_bolt_rotate">
+  <asset>
+    <mesh file="meshes/m5_bolt.stl" name="m5_bolt_mesh" scale="0.001 0.001 0.001"/>
+    <texture name="steel-metal" file="../textures/steel-scratched.png" type="cube" />
+    <material name="invisible" rgba="0 0 0 0" specular="0" shininess="0" emission="0"/>
+    <material name="smetal" reflectance="1.0" texrepeat="1 1" texture="steel-metal" texuniform="true"/>
+  </asset>
+
+  <worldbody>
+    <body>
+      <body name="object" pos="0.13 0.1 0.85">
+        <geom pos="0 0 0" mesh="m5_bolt_mesh" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" density="100" friction="0.95 0.3 0.1" condim="4" material="smetal" group="0"/>
+        <geom pos="0 0 0" mesh="m5_bolt_mesh" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" density="100" friction="0.95 0.3 0.1" condim="4" material="smetal" group="1"/>
+        <geom name="handle_geom" size="0.005 0.005 0.005" pos="0 0 0.025" type="box" material="invisible"  group="0"/>
+        <!-- Slide along Z -->
+        <joint name="screw_slide" type="slide" axis="0 0 1"/>
+        <!-- Rotate around Z -->
+        <joint name="screw_rotate" type="hinge" axis="0 0 1"/>
+        <site rgba="1 0 0 1" size="0.005 0.005 0.005" pos="0 0 0.025" type="box" name="handle_site"/>
+      </body>
+      <site rgba="0 1 0 1" size="0.025" pos="0 0 0.0236" name="top_site"/>
+      <site rgba="0 0 1 1" size="0.0215" pos="0 0 0" name="bottom_site"/>
+      <site rgba="1 1 0 1" size="0.0215" pos="0.0125 0 0.01" name="horizontal_radius_site"/>
+    </body>
+  </worldbody>
+   <!-- Simulate screw thread: rotation causes translation -->
+  <tendon>
+    <spatial limited="false">
+      <joint name="screw_rotate" coef="1"/>
+      <joint name="screw_slide" type="slide" axis="0 0 1" limited="true" range="0 0.015" damping="5"/>
+    </spatial>
+  </tendon>
+  <actuator>
+    <passive joint="screw_slide" frictionloss="200"/>
+    <general joint="screw_slide" damping="5"/>
+    <motor joint="screw_rotate" ctrlrange="-1 1"/>
+  </actuator>
+</mujoco>

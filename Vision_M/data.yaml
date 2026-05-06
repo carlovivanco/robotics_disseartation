@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 3
+names: ['Bolt', 'Nut', 'washer']
+
+roboflow:
+  workspace: thesis-xvqdl
+  project: nuts-and-bolts-ukmlw
+  version: 3
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/thesis-xvqdl/nuts-and-bolts-ukmlw/dataset/3

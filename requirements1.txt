@@ -1,0 +1,11 @@
+stable-baselines3
+torch
+torchvision
+timm
+numpy
+pillow
+termcolor
+tensorboard
+optuna
+pandas
+h5py

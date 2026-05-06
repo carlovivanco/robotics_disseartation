@@ -1,0 +1,32 @@
+<mujoco model="m5_nut">
+  <asset>
+    <mesh file="meshes/m5_nut.stl" name="m5_nut_mesh" scale="0.001 0.001 0.05"/>
+    <texture name="steel-metal" file="../textures/steel-scratched.png" type="cube" />
+    <material name="smetal" reflectance="1.0" texrepeat="1 1" texture="steel-metal" texuniform="true"/>
+  </asset>
+
+  <worldbody>
+    <body>
+      <body name="object">
+        <!--geom pos="0 0 0" mesh="m5_nut_mesh" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" density="100" friction="0.95 0.3 0.1" condim="4" material="smetal" group="0"/>
+        <geom pos="0 0 0" mesh="m5_nut_mesh" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" density="100" friction="0.95 0.3 0.1" condim="4" material="smetal" group="1"/>
+        <geom name="nut_hole" type="cylinder" size="0.012 0.015" pos="0 0 0" rgba="0 0.3 0 0.1" contype="1" conaffinity="1" group="1"/-->
+        <geom name="hole1_geom0" pos="0.00485 0 0" size="0.001 0.003 0.011" type="box" euler="0 0 0" material="smetal" density="800000" friction="0.95 0.3 0.1" group="0" condim="4"/>
+        <geom name="hole1_geom1" pos="0.002425 0.0042 0" size="0.001 0.003 0.011" type="box" euler="0 0 1.0472" material="smetal" density="800000" friction="0.95 0.3 0.1" group="0" condim="4"/>
+        <geom name="hole1_geom2" pos="-0.002425 0.0042 0" size="0.001 0.003 0.011" type="box" euler="0 0 2.0944" material="smetal" density="800000" friction="0.95 0.3 0.1" group="0" condim="4"/>
+        <geom name="hole1_geom3" pos="-0.00485 0 0" size="0.001 0.003 0.011" type="box" euler="0 0 3.1416" material="smetal" density="800000" friction="0.95 0.3 0.1" group="0" condim="4"/>
+        <geom name="hole1_geom4" pos="-0.002425 -0.0042 0" size="0.001 0.003 0.011" type="box" euler="0 0 4.1888" material="smetal" density="800000" friction="0.95 0.3 0.1" group="0" condim="4"/>
+        <geom name="hole1_geom5" pos="0.002425 -0.0042 0" size="0.001 0.003 0.011" type="box" euler="0 0 5.2360" material="smetal" density="800000" friction="0.95 0.3 0.1" group="0" condim="4"/>
+        <geom pos="0.00485 0 0" size="0.001 0.003 0.011" type="box" euler="0 0 0" material="smetal" density="800000" friction="0.95 0.3 0.1" group="1" condim="4"/>
+        <geom pos="0.002425 0.0042 0" size="0.001 0.003 0.011" type="box" euler="0 0 1.0472" material="smetal" density="800000" friction="0.95 0.3 0.1" group="1" condim="4"/>
+        <geom pos="-0.002425 0.0042 0" size="0.001 0.003 0.011" type="box" euler="0 0 2.0944" material="smetal" density="800000" friction="0.95 0.3 0.1" group="1" condim="4"/>
+        <geom pos="-0.00485 0 0" size="0.001 0.003 0.011" type="box" euler="0 0 3.1416" material="smetal" density="800000" friction="0.95 0.3 0.1" group="1" condim="4"/>
+        <geom pos="-0.002425 -0.0042 0" size="0.001 0.003 0.011" type="box" euler="0 0 4.1888" material="smetal" density="800000" friction="0.95 0.3 0.1" group="1" condim="4"/>
+        <geom pos="0.002425 -0.0042 0" size="0.001 0.003 0.011" type="box" euler="0 0 5.2360" material="smetal" density="800000" friction="0.95 0.3 0.1" group="1" condim="4"/>
+      </body>
+      <site rgba="0 1 0 1" size="0.015" pos="0 0 0.015" name="top_site"/>
+      <site rgba="0 0 1 1" size="0.015" pos="0 0 -0.015" name="bottom_site"/>
+      <site rgba="1 1 0 1" size="0.015" pos="0.02425 0 0" name="horizontal_radius_site"/>
+    </body>
+  </worldbody>
+</mujoco>
