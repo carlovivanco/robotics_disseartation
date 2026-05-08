@@ -1,0 +1,56 @@
+# @package _global_
+# Diffusion Policy — state-of-the-art for manipulation (Chi et al. 2023)
+name: diffusion
+
+# Observation / action dims (must match environment)
+obs_dim: 64
+action_dim: 7
+
+# Temporal dimensions
+obs_horizon: 2       # how many past observations to condition on
+pred_horizon: 16     # how many future actions to predict
+action_horizon: 8    # how many predicted actions to execute before re-planning
+
+# DDPM noise schedule
+n_diffusion_steps: 100
+beta_start: 0.0001
+beta_end: 0.02
+beta_schedule: squaredcos_cap_v2   # better than linear for robotics
+
+# DDIM inference (faster: 100 → 10 steps)
+n_inference_steps: 10
+
+# 1-D U-Net noise predictor
+network:
+  down_dims: [256, 512, 1024]
+  kernel_size: 5
+  n_groups: 8            # GroupNorm groups
+  diffusion_step_embed_dim: 256
+
+# EMA for stable training
+ema:
+  enabled: true
+  power: 0.75
+  max_value: 0.9999
+  min_value: 0.0
+
+# Training
+training:
+  n_epochs: 500
+  batch_size: 256
+  learning_rate: 1.0e-4
+  weight_decay: 1.0e-6
+  lr_warmup_steps: 500
+  gradient_clip: 1.0
+  early_stopping_patience: 50
+  val_split: 0.1
+
+# Dataset
+dataset:
+  hdf5_path: demos/demo_SD_2/demo.hdf5
+  normalize: true          # z-score normalize obs and actions
+  augment: true            # Gaussian noise augmentation on obs
+
+# Output
+model_path: diffusion_model_best.pth
+eval_episodes: 5

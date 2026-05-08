@@ -1,0 +1,30 @@
+defaults:
+  - algorithm: tqc
+  - env: robosuite
+  - il: diffusion
+  - _self_
+
+# ── top-level switches ────────────────────────────────────────────────────────
+mode: train          # train | eval
+seed: 42
+device: cuda
+
+# ── experiment tracking ───────────────────────────────────────────────────────
+logging:
+  use_wandb: true
+  project: bolt-screwdriving
+  entity: null        # set to your W&B username/org
+  run_name: null      # auto-generated if null
+  tags: []
+  save_video: false
+
+# ── output paths ─────────────────────────────────────────────────────────────
+output_dir: outputs/${now:%Y-%m-%d_%H-%M-%S}
+checkpoint_dir: ${output_dir}/checkpoints
+
+hydra:
+  run:
+    dir: ${output_dir}
+  sweep:
+    dir: multirun/${now:%Y-%m-%d_%H-%M-%S}
+    subdir: ${hydra.job.num}

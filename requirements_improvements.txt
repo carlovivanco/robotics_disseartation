@@ -1,0 +1,45 @@
+# ────────────────────────────────────────────────────────────────────────────
+# New dependencies for the improved pipeline.
+# Install on top of requirements1.txt:
+#
+#   pip install -r requirements1.txt
+#   pip install -r requirements_improvements.txt
+#
+# For IsaacLab (GPU simulation, replaces 8-CPU robosuite SubprocVecEnv):
+#   See README_IMPROVEMENTS.md → "IsaacLab Setup"
+# ────────────────────────────────────────────────────────────────────────────
+
+# ── Algorithm improvements ────────────────────────────────────────────────────
+sb3-contrib>=2.3.0          # TQC (Truncated Quantile Critics) — better than TD3 for contacts
+
+# ── Configuration management ──────────────────────────────────────────────────
+hydra-core>=1.3.2           # Hydra: YAML config + CLI overrides + multirun sweeps
+omegaconf>=2.3.0            # Config object (Hydra dependency)
+hydra-optuna-sweeper>=1.2.0 # Optuna integration for Hydra multirun sweeps
+
+# ── Experiment tracking ───────────────────────────────────────────────────────
+wandb>=0.17.0               # Weights & Biases experiment tracking
+
+# ── Imitation Learning ────────────────────────────────────────────────────────
+# Diffusion Policy deps (included in diffusion_policy.py, no extra package needed)
+# einops is a nice-to-have for tensor ops in diffusion nets
+einops>=0.7.0
+
+# ── IsaacLab (NVIDIA GPU simulation) ─────────────────────────────────────────
+# NOTE: Install these only if you have an NVIDIA GPU + Isaac Sim 4.x
+# Follow the official IsaacLab installation guide:
+#   https://isaac-sim.github.io/IsaacLab/main/source/setup/installation/index.html
+#
+# After Isaac Sim is installed:
+#   pip install isaaclab          # core framework
+#   pip install isaaclab_assets   # Franka Panda USD, robot models
+#   pip install isaaclab_tasks    # optional: pre-built task library
+#
+# These are NOT installed here because they require Isaac Sim's Python env:
+# isaaclab
+# isaaclab_assets
+
+# ── Utilities ─────────────────────────────────────────────────────────────────
+gymnasium>=0.29.0           # gymnasium interface (new API)
+tqdm>=4.66.0                # progress bars
+rich>=13.0.0                # pretty terminal output

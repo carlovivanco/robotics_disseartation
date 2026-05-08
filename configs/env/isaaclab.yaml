@@ -1,0 +1,53 @@
+# @package _global_
+# NVIDIA IsaacLab environment — GPU-parallel (4096 envs vs 8 CPU envs in robosuite)
+# Requires: Isaac Sim 4.x + IsaacLab 1.x + NVIDIA GPU (RTX 3090+ recommended)
+name: isaaclab
+
+# GPU-parallel environments (the key advantage over robosuite/MuJoCo)
+n_envs: 4096
+env_spacing: 2.5        # meters between environments in the grid
+
+# Physics
+sim:
+  dt: 0.00417           # 240 Hz physics (12 substeps per 20 Hz control step)
+  render_interval: 12   # render every 12 physics steps → 20 Hz control
+  gravity: [0.0, 0.0, -9.81]
+  physics_material:
+    static_friction: 1.0
+    dynamic_friction: 1.0
+    restitution: 0.0
+
+# Task
+horizon: 5000           # steps per episode at 20 Hz
+control_freq: 20        # Hz
+action_scale_pos: 0.1   # meters per normalized unit
+action_scale_rot: 0.1   # radians per normalized unit
+
+# Robot
+robot:
+  prim_path: /World/envs/env_.*/Robot
+  usd_path: null         # uses isaaclab_assets Franka Panda if null
+
+# Bolt asset (USD export from robosuite MuJoCo model)
+bolt:
+  prim_path: /World/envs/env_.*/Bolt
+  usd_path: assets/m5_bolt.usd   # must be exported — see README
+  mass: 0.01             # kg
+  enable_screw_joint: true
+
+# Domain randomization via IsaacLab EventManager
+domain_randomization:
+  enabled: true
+  friction_range: [0.3, 1.5]
+  mass_multiplier_range: [0.8, 1.2]
+  obs_noise_std: 0.01
+  randomize_every_n_steps: 500   # re-randomize mid-episode
+
+# Reward coefficients (same as robosuite for consistency)
+reward:
+  reach_weight: 0.1
+  grasp_weight: 0.35
+  screw_weight: 0.5
+  moveaway_weight: 0.7
+  success_bonus: 1.0
+  potential_gamma: 0.9018
